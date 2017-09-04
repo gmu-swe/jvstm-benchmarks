@@ -38,4 +38,8 @@ public abstract class OperationExecutorFactory {
 		opThread.start();
 		opThread.join();
 	}
+
+	public abstract void checkpoint();
+
+	public abstract void rollback();
 }

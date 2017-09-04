@@ -14,4 +14,14 @@ public class MGLockingOperationExecutorFactory extends OperationExecutorFactory 
 	public OperationExecutor createOperationExecutor(Operation op) {
 		return new MGLockingOperationExecutor(op);
 	}
+
+	@Override
+	public void checkpoint() {
+		throw new Error("Not implemented");
+	}
+
+	@Override
+	public void rollback() {
+		throw new Error("Not implemented");
+	}
 }

@@ -16,4 +16,14 @@ public class DefaultOperationExecutorFactory extends OperationExecutorFactory {
 	public OperationExecutor createOperationExecutor(Operation op) {
 		return new DefaultOperationExecutor(op);
 	}
+
+	@Override
+	public void checkpoint() {
+		throw new Error("Not implemented");
+	}
+
+	@Override
+	public void rollback() {
+		throw new Error("Not implemented");
+	}
 }

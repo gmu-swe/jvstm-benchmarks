@@ -14,4 +14,14 @@ public class DeuceSTMOperationExecutorFactory extends OperationExecutorFactory {
 		return new DefaultOperationExecutor(op);
 	}
 
+	@Override
+	public void checkpoint() {
+		throw new Error("Not implemented");
+	}
+
+	@Override
+	public void rollback() {
+		throw new Error("Not implemented");
+	}
+
 }

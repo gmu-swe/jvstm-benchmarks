@@ -51,6 +51,8 @@ public class JVSTMOperationExecutor implements OperationExecutor {
 			default:
 				throw new RuntimeError("Unexpected operation type");
 		}
+
+		this.idNull = true;
 	}
 
 	public int execute() throws OperationFailedException {

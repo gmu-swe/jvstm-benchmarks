@@ -14,4 +14,14 @@ public class CGLockingOperationExecutorFactory extends OperationExecutorFactory 
 	public OperationExecutor createOperationExecutor(Operation op) {
 		return new CGLockingOperationExecutor(op);
 	}
+
+	@Override
+	public void checkpoint() {
+		throw new Error("Not implemented");
+	}
+
+	@Override
+	public void rollback() {
+		throw new Error("Not implemented");
+	}
 }
