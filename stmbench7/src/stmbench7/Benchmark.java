@@ -15,6 +15,7 @@ import stmbench7.core.DesignObjFactory;
 import stmbench7.core.Operation;
 import stmbench7.core.RuntimeError;
 import stmbench7.correctness.invariants.CheckInvariantsOperation;
+import stmbench7.correctness.invariants.ComputeChecksumOperation;
 import stmbench7.correctness.opacity.SequentialReplayThread;
 import stmbench7.correctness.opacity.StructureComparisonOperation;
 import stmbench7.impl.NoSynchronizationInitializer;
@@ -86,7 +87,11 @@ public class Benchmark {
 		}
 
 		benchmark.createInitialClone();
+		int preChecksum = benchmark.checksum();
 		benchmark.start();
+		int postChecksum = benchmark.checksum();
+		if (preChecksum != postChecksum)
+			throw new Error("Wrong checksum!");
 		benchmark.checkInvariants(false);
 		benchmark.checkOpacity();
 		/* disabled to print only commit stats */
@@ -370,6 +375,15 @@ public class Benchmark {
 			threads[threadNum] = ThreadFactory.instance.createThread(benchThreads[threadNum]);
 		}
 		System.err.println("Setup completed.");
+	}
+
+	private int checksum() throws InterruptedException {
+		ComputeChecksumOperation checksumOperation = new ComputeChecksumOperation(setup);
+		OperationExecutorFactory.executeSequentialOperation(checksumOperation);
+
+		System.err.println("Checksum: " + checksumOperation.getChecksum());
+
+		return checksumOperation.getChecksum();
 	}
 
 	private void checkInvariants(boolean initial) throws InterruptedException {
