@@ -112,7 +112,13 @@ public class BenchThread implements Runnable {
 			try {
 				long startTime = System.currentTimeMillis();
 
+				// Checkpoint
+				OperationExecutorFactory.instance.checkpoint();
+
 				result = currentExecutor.execute();
+
+				// Rollback
+				OperationExecutorFactory.instance.rollback();
 
 				long endTime = System.currentTimeMillis();
 				// System.out.println("success");

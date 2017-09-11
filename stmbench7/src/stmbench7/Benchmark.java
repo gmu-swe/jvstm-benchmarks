@@ -414,11 +414,6 @@ public class Benchmark {
 		System.err.println("\nBenchmark started.");
 		ThreadRandom.startConcurrentPhase();
 
-		// TODO compute benchmark's state checksum
-
-		// Checkpoint
-		OperationExecutorFactory.instance.checkpoint();
-
 		long startTime = System.currentTimeMillis();
 
 		for (Thread thread : threads) thread.start();
@@ -430,14 +425,9 @@ public class Benchmark {
 
 		for (Thread thread : threads) thread.join();
 
-		// Rollbak
-		OperationExecutorFactory.instance.rollback();
-
 		long endTime = System.currentTimeMillis();
 		elapsedTime = ((double) (endTime - startTime)) / 1000.0;
 		System.err.println("Benchmark completed.\n");
-
-		// TODO compare benchmark's state checksum
 	}
 
 	private void checkOpacity() throws InterruptedException {
