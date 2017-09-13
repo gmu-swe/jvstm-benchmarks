@@ -39,7 +39,7 @@ public abstract class OperationExecutorFactory {
 		opThread.join();
 	}
 
-	public abstract void checkpoint();
+	public abstract void checkpoint(Setup setup);
 
-	public abstract void rollback();
+	public abstract void rollback(Setup setup);
 }

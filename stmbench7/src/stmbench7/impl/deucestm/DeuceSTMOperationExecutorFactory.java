@@ -2,6 +2,7 @@ package stmbench7.impl.deucestm;
 
 import stmbench7.OperationExecutor;
 import stmbench7.OperationExecutorFactory;
+import stmbench7.Setup;
 import stmbench7.core.Operation;
 import stmbench7.impl.DefaultOperationExecutor;
 
@@ -15,12 +16,12 @@ public class DeuceSTMOperationExecutorFactory extends OperationExecutorFactory {
 	}
 
 	@Override
-	public void checkpoint() {
+	public void checkpoint(Setup setup) {
 		throw new Error("Not implemented");
 	}
 
 	@Override
-	public void rollback() {
+	public void rollback(Setup setup) {
 		throw new Error("Not implemented");
 	}
 

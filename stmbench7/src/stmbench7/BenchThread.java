@@ -24,6 +24,8 @@ public class BenchThread implements Runnable {
 	protected OperationExecutor[] operations;
 	protected final short myThreadNum;
 
+	private Setup setup;
+
 	public int[] successfulOperations, failedOperations;
 	public int[][] operationsTTC, operationsHighTTCLog;
 
@@ -90,6 +92,8 @@ public class BenchThread implements Runnable {
 		this.myThreadNum = myThreadNum;
 		this.checkpoint = !Parameters.WarmUpEnabled || !warmup;
 
+		this.setup = setup;
+
 		createOperations(setup);
 
 		if (Parameters.sequentialReplayEnabled)
@@ -101,6 +105,8 @@ public class BenchThread implements Runnable {
 		operations = new OperationExecutor[OperationId.values().length];
 		createOperations(setup);
 		myThreadNum = 0;
+
+		this.setup = setup;
 	}
 
 	public void run() {

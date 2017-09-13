@@ -1,7 +1,10 @@
 package stmbench7.impl;
 
+import net.jonbell.crij.runtime.CRIJInstrumented;
+import net.jonbell.crij.runtime.CheckpointRollbackAgent;
 import stmbench7.OperationExecutor;
 import stmbench7.OperationExecutorFactory;
+import stmbench7.Setup;
 import stmbench7.annotations.Immutable;
 import stmbench7.core.Operation;
 
@@ -18,12 +21,16 @@ public class DefaultOperationExecutorFactory extends OperationExecutorFactory {
 	}
 
 	@Override
-	public void checkpoint() {
-		throw new Error("Not implemented");
+	public void checkpoint(Setup setup) {
+//		CheckpointRollbackAgent.checkpointHeapRoots();
+		((CRIJInstrumented)setup).$$crijCheckpoint(CheckpointRollbackAgent.getNewVersionForCheckpoint());
+		setup.getModule(); // Touch something to propagate the checkpoint one level in
 	}
 
 	@Override
-	public void rollback() {
-		throw new Error("Not implemented");
+	public void rollback(Setup setup) {
+//		CheckpointRollbackAgent.rollbackHeapRoots();
+		((CRIJInstrumented)setup).$$crijRollback(CheckpointRollbackAgent.getNewVersionForRollback());
+		setup.getModule(); // Touch something to propagate the rollback one level in
 	}
 }

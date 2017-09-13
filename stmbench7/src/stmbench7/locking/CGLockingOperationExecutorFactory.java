@@ -2,6 +2,7 @@ package stmbench7.locking;
 
 import stmbench7.OperationExecutor;
 import stmbench7.OperationExecutorFactory;
+import stmbench7.Setup;
 import stmbench7.core.Operation;
 
 /**
@@ -16,12 +17,12 @@ public class CGLockingOperationExecutorFactory extends OperationExecutorFactory 
 	}
 
 	@Override
-	public void checkpoint() {
+	public void checkpoint(Setup setup) {
 		throw new Error("Not implemented");
 	}
 
 	@Override
-	public void rollback() {
+	public void rollback(Setup setup) {
 		throw new Error("Not implemented");
 	}
 }
