@@ -118,7 +118,7 @@ public class Benchmark {
 			printRunTimeParametersInformation();
 		}
 		generateOperationCDF();
-		setupStructures();
+		setupStructures(!reexecution);
 	}
 
 	private void printHeader() {
@@ -351,7 +351,7 @@ public class Benchmark {
 		operationCDF[operations.length - 1] = 1.0; // to avoid rounding errors
 	}
 
-	private void setupStructures() throws InterruptedException {
+	private void setupStructures(boolean warmup) throws InterruptedException {
 		System.err.println("Setup start...");
 		setup = new Setup();
 
@@ -364,13 +364,13 @@ public class Benchmark {
 		for (short threadNum = 0; threadNum < Parameters.numThreads; threadNum++) {
 			switch (type) {
 				case NORMAL:
-					benchThreads[threadNum] = new BenchThread(setup, operationCDF, threadNum);
+					benchThreads[threadNum] = new BenchThread(setup, operationCDF, threadNum, warmup);
 					break;
 				case OPS_PER_TX:
-					benchThreads[threadNum] = new BenchThreadOps(setup, operationCDF, threadNum);
+					benchThreads[threadNum] = new BenchThreadOps(setup, operationCDF, threadNum, warmup);
 					break;
 				case TOTAL_OPS:
-					benchThreads[threadNum] = new BenchThreadTotalOps(setup, operationCDF, threadNum);
+					benchThreads[threadNum] = new BenchThreadTotalOps(setup, operationCDF, threadNum, warmup);
 			}
 			threads[threadNum] = ThreadFactory.instance.createThread(benchThreads[threadNum]);
 		}

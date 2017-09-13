@@ -11,8 +11,8 @@ public class BenchThreadTotalOps extends BenchThread {
 	private static int _numOps;
 	private static final int INVALID_OP_NUMBER = -1;
 
-	public BenchThreadTotalOps(Setup setup, double[] operationCDF, short myThreadNum) {
-		super(setup, operationCDF, myThreadNum);
+	public BenchThreadTotalOps(Setup setup, double[] operationCDF, short myThreadNum, boolean warmup) {
+		super(setup, operationCDF, myThreadNum, warmup);
 	}
 
 	public static void buildOps(double[] operationCDF, int numOps) {

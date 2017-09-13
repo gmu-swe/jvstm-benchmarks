@@ -19,6 +19,7 @@ public class BenchThread implements Runnable {
 	public static final ThreadLocal<Short> ID = new ThreadLocal<Short>();
 
 	protected volatile boolean stop = false;
+	protected boolean checkpoint = true;
 	protected double[] operationCDF;
 	protected OperationExecutor[] operations;
 	protected final short myThreadNum;
@@ -77,7 +78,7 @@ public class BenchThread implements Runnable {
 
 	public ArrayList<ReplayLogEntry> replayLog;
 
-	public BenchThread(Setup setup, double[] operationCDF, short myThreadNum) {
+	public BenchThread(Setup setup, double[] operationCDF, short myThreadNum, boolean warmup) {
 		this.operationCDF = operationCDF;
 
 		int numOfOperations = OperationId.values().length;
@@ -87,6 +88,7 @@ public class BenchThread implements Runnable {
 		failedOperations = new int[numOfOperations];
 		operations = new OperationExecutor[numOfOperations];
 		this.myThreadNum = myThreadNum;
+		this.checkpoint = !Parameters.WarmUpEnabled || !warmup;
 
 		createOperations(setup);
 
@@ -104,6 +106,11 @@ public class BenchThread implements Runnable {
 	public void run() {
 		ID.set(this.myThreadNum);
 		int operationNumber;
+
+		// Checkpoint
+		if (this.checkpoint)
+			OperationExecutorFactory.instance.checkpoint(this.setup);
+
 		while (shouldContinue(operationNumber = getNextOperationNumber())) {
 			OperationExecutor currentExecutor = operations[operationNumber];
 			int result = 0;
@@ -112,13 +119,7 @@ public class BenchThread implements Runnable {
 			try {
 				long startTime = System.currentTimeMillis();
 
-				// Checkpoint
-				OperationExecutorFactory.instance.checkpoint();
-
 				result = currentExecutor.execute();
-
-				// Rollback
-				OperationExecutorFactory.instance.rollback();
 
 				long endTime = System.currentTimeMillis();
 				// System.out.println("success");
@@ -153,6 +154,11 @@ public class BenchThread implements Runnable {
 				// newEntry.timestamp);
 			}
 		}
+
+		// Rollback
+		if (this.checkpoint)
+			OperationExecutorFactory.instance.rollback(this.setup);
+
 		System.err.println("Thread #" + myThreadNum + " finished.");
 		// int i = 0;
 		// for (ReplayLogEntry entry : replayLog)

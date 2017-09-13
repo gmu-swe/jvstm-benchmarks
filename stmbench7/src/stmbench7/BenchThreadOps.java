@@ -8,8 +8,8 @@ public class BenchThreadOps extends BenchThread {
 	public final int _numOps;
 	int opsExecuted = 0;
 
-	public BenchThreadOps(Setup setup, double[] operationCDF, short myThreadNum) {
-		super(setup, operationCDF, myThreadNum);
+	public BenchThreadOps(Setup setup, double[] operationCDF, short myThreadNum, boolean warmup) {
+		super(setup, operationCDF, myThreadNum, warmup);
 		_numOps = Parameters.ExecutionType.OPS_PER_TX.getLimit();
 	}
 
