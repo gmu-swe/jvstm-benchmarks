@@ -48,23 +48,23 @@ public class ComputeChecksumOperation implements Operation {
 	}
 
 	private int checksumModule(Module m) {
-		return Integer.hashCode(m.getId())
-				^ Integer.hashCode(m.getBuildDate())
+		return m.getId()
+				^ m.getBuildDate()
 				^ m.getType().hashCode()
 				^ checksumComplexAssembly(m.getDesignRoot())
 				^ checksumManual(m.getManual());
 	}
 
 	private int checksumManual(Manual m) {
-		return Integer.hashCode(m.getId())
+		return m.getId()
 				^ m.getText().hashCode()
 				^ m.getTitle().hashCode();
 	}
 
 	private int checksumComplexAssembly(ComplexAssembly ca) {
-		int ret = Integer.hashCode(ca.getId())
-				^ Integer.hashCode(ca.getBuildDate())
-				^ Short.hashCode(ca.getLevel())
+		int ret = ca.getId()
+				^ ca.getBuildDate()
+				^ ca.getLevel()
 				^ ca.getType().hashCode();
 
 		for (Assembly a : ca.getSubAssemblies()) {
@@ -78,8 +78,8 @@ public class ComputeChecksumOperation implements Operation {
 	}
 
 	private int checksumBaseAssembly(BaseAssembly ba) {
-		int ret = Integer.hashCode(ba.getId())
-				^ Integer.hashCode(ba.getBuildDate())
+		int ret = ba.getId()
+				^ ba.getBuildDate()
 				^ ba.getType().hashCode();
 
 		for (CompositePart cp : ba.getComponents()) {
@@ -90,8 +90,8 @@ public class ComputeChecksumOperation implements Operation {
 	}
 
 	private int checksumCompositePart(CompositePart cp) {
-		int ret = Integer.hashCode(cp.getId())
-				^ Integer.hashCode(cp.getBuildDate())
+		int ret = cp.getId()
+				^ cp.getBuildDate()
 				^ cp.getType().hashCode()
 				^ checksumDocument(cp.getDocumentation())
 				^ checksumAtomicPart(cp.getRootPart());
@@ -104,17 +104,17 @@ public class ComputeChecksumOperation implements Operation {
 	}
 
 	private int checksumDocument(Document d) {
-		return Integer.hashCode(d.getDocumentId())
+		return d.getDocumentId()
 				^ d.getTitle().hashCode()
 				^ d.getText().hashCode();
 	}
 
 	private int checksumAtomicPart(AtomicPart ap) {
-		return Integer.hashCode(ap.getId())
-				^ Integer.hashCode(ap.getBuildDate())
-				^ Integer.hashCode(ap.getX())
-				^ Integer.hashCode(ap.getY())
-				^ Integer.hashCode(ap.getNumToConnections())
+		return ap.getId()
+				^ ap.getBuildDate()
+				^ ap.getX()
+				^ ap.getY()
+				^ ap.getNumToConnections()
 				^ ap.getType().hashCode();
 	}
 }
