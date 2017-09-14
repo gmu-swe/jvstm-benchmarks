@@ -1,5 +1,7 @@
 package stmbench7.backend;
 
+import java.util.Iterator;
+
 import stmbench7.annotations.Atomic;
 import stmbench7.annotations.ReadOnly;
 import stmbench7.annotations.Update;
@@ -28,4 +30,6 @@ public interface Index<K extends Comparable<K>,V> extends Iterable<V> {
     
     @ReadOnly
     public Iterable<K> getKeys();
+
+    public Iterator<V> iterator();
 }

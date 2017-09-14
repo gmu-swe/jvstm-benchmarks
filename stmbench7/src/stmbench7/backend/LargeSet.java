@@ -1,5 +1,7 @@
 package stmbench7.backend;
 
+import java.util.Iterator;
+
 import stmbench7.annotations.Atomic;
 import stmbench7.annotations.ReadOnly;
 import stmbench7.annotations.Update;
@@ -25,4 +27,6 @@ public interface LargeSet<E extends Comparable<E>> extends Iterable<E> {
 	
 	@ReadOnly
 	int size();
+
+	public Iterator<E> iterator();
 }

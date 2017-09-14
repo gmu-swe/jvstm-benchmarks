@@ -1,5 +1,6 @@
 package stmbench7.impl.backend;
 
+import java.util.Iterator;
 import java.util.TreeSet;
 
 import stmbench7.backend.LargeSet;
@@ -31,5 +32,13 @@ public class LargeSetImpl<E extends Comparable<E>> extends TreeSet<E> implements
 
 	public boolean remove(E element) {
 		return super.remove(element);
+	}
+
+	public int size() {
+		return super.size();
+	}
+
+	public Iterator<E> iterator() {
+		return super.iterator();
 	}
 }

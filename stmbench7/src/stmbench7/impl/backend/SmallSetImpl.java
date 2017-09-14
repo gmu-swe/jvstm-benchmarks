@@ -32,4 +32,8 @@ public class SmallSetImpl<E> extends ArrayList<E> {
 	public ImmutableCollection<E> immutableView() {
 		return new ImmutableViewImpl<E>(this);
 	}
+
+	public boolean contains(Object o) {
+		return super.contains(o);
+	}
 }
