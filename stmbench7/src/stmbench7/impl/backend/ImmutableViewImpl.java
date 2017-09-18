@@ -2,17 +2,18 @@ package stmbench7.impl.backend;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import stmbench7.backend.ImmutableCollection;
 
 public class ImmutableViewImpl<E> implements ImmutableCollection<E>, Cloneable {
 
-	private final ArrayList<E> elements;
-	
-	public ImmutableViewImpl(ArrayList<E> elements) {
+	private final LinkedList<E> elements;
+
+	public ImmutableViewImpl(LinkedList<E> elements) {
 		this.elements = elements;
 	}
-	
+
 	public boolean contains(E element) {
 		return elements.contains(element);
 	}
@@ -24,9 +25,9 @@ public class ImmutableViewImpl<E> implements ImmutableCollection<E>, Cloneable {
 	public Iterator<E> iterator() {
 		return elements.iterator();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public ImmutableCollection<E> clone() {
-		return new ImmutableViewImpl<E>((ArrayList<E>) elements.clone());
+		return new ImmutableViewImpl<E>((LinkedList<E>) elements.clone());
 	}
 }
