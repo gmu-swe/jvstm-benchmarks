@@ -11,18 +11,17 @@ import stmbench7.impl.DefaultOperationExecutor;
 
 public class DeuceSTMOperationExecutorFactory extends OperationExecutorFactory {
 
-	private Context context;
+	private Context context = ContextDelegator.getInstance();
 
 	@Override
 	public OperationExecutor createOperationExecutor(Operation op) {
 		if(op.getOperationId() != null)
-			return new DeuceSTMOperationExecutor(op);
+			return new DeuceSTMOperationExecutor(op, this.context);
 		return new DefaultOperationExecutor(op);
 	}
 
 	@Override
 	public void checkpoint(Setup setup) {
-		this.context = ContextDelegator.getInstance();
 		context.init(0, "Checkpoint");
 	}
 
