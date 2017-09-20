@@ -29,6 +29,14 @@ import stmbench7.impl.jvstm.JVSTMStats;
  */
 @NonAtomic
 public class Benchmark {
+	public static final boolean doCheckpointRollback;
+
+	static {
+		if (System.getProperty("noCheckpoint") != null)
+			doCheckpointRollback = false;
+		else
+			doCheckpointRollback = true;
+	}
 
 	public static final String VERSION = "1.0(15.02.2011)";
 	public static ExecutionType type = NORMAL;
@@ -90,7 +98,7 @@ public class Benchmark {
 		int preChecksum = benchmark.checksum();
 		benchmark.start();
 		int postChecksum = benchmark.checksum();
-		if (preChecksum != postChecksum)
+		if (doCheckpointRollback && preChecksum != postChecksum)
 			throw new Error("Wrong checksum!");
 		benchmark.checkInvariants(false);
 		benchmark.checkOpacity();
