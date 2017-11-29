@@ -3,6 +3,7 @@ package stmbench7.impl.deucestm;
 import org.deuce.transaction.Context;
 import org.deuce.transaction.ContextDelegator;
 
+import stmbench7.Benchmark;
 import stmbench7.OperationExecutor;
 import stmbench7.OperationExecutorFactory;
 import stmbench7.Setup;
@@ -22,11 +23,18 @@ public class DeuceSTMOperationExecutorFactory extends OperationExecutorFactory {
 
 	@Override
 	public void checkpoint(Setup setup) {
+		if (!Benchmark.doCheckpointRollback) {
+			return;
+		}
+
 		context.init(0, "Checkpoint");
 	}
 
 	@Override
 	public void rollback(Setup setup) {
+		if (!Benchmark.doCheckpointRollback)
+			return;
+
 		context.rollback();
 	}
 

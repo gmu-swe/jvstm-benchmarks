@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 
 import org.deuce.transaction.Context;
 
+import stmbench7.Benchmark;
 import stmbench7.OperationExecutor;
 import stmbench7.core.Operation;
 import stmbench7.core.OperationFailedException;
@@ -22,7 +23,7 @@ public class DeuceSTMOperationExecutor implements OperationExecutor {
 	}
 
 	public int execute() throws OperationFailedException {
-        if (context == null)
+        if (context == null || !Benchmark.doCheckpointRollback)
         	return doExecute();
         else {
         	if (m == null) {
