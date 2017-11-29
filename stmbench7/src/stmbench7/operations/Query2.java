@@ -6,6 +6,7 @@ import stmbench7.Setup;
 import stmbench7.annotations.ReadOnly;
 import stmbench7.annotations.Transactional;
 import stmbench7.backend.Index;
+import stmbench7.backend.Iterable;
 import stmbench7.backend.LargeSet;
 import stmbench7.core.AtomicPart;
 import stmbench7.core.OperationFailedException;

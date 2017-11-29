@@ -8,6 +8,7 @@ import stmbench7.Setup;
 import stmbench7.ThreadRandom;
 import stmbench7.annotations.ReadOnly;
 import stmbench7.annotations.Transactional;
+import stmbench7.backend.ImmutableCollection;
 import stmbench7.backend.Index;
 import stmbench7.core.Assembly;
 import stmbench7.core.AtomicPart;
@@ -41,7 +42,7 @@ public class Traversal7 extends BaseOperation {
     	HashSet<Assembly> visitedAssemblies = new HashSet<Assembly>();
 
     	int result = 0;
-    	Iterable<BaseAssembly> ownerBaseAssemblies = part.getUsedIn();
+    	ImmutableCollection<BaseAssembly> ownerBaseAssemblies = part.getUsedIn();
     	for(BaseAssembly assembly : ownerBaseAssemblies)
     		result += traverse(assembly, visitedAssemblies);
 

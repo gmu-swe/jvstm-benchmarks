@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.TreeMap;
 
 import stmbench7.backend.Index;
+import stmbench7.backend.Iterable;
 import stmbench7.core.RuntimeError;
 
 /**
@@ -37,8 +38,12 @@ public class TreeMapIndex<K extends Comparable<K>,V> implements Index<K,V>, Clon
 		return index.get(key);
 	}
 
-	public Iterable<V> getRange(K minKey, K maxKey) {
-		return index.subMap(minKey, maxKey).values();
+	public Iterable<V> getRange(final K minKey, final K maxKey) {
+		return new Iterable<V>() {
+			public Iterator<V> iterator() {
+				return index.subMap(minKey, maxKey).values().iterator();
+			}
+		};
 	}
 
 	public boolean remove(K key) {
@@ -51,7 +56,11 @@ public class TreeMapIndex<K extends Comparable<K>,V> implements Index<K,V>, Clon
 	}
 	
 	public Iterable<K> getKeys() {
-		return index.keySet();
+		return new Iterable<K>() {
+			public Iterator<K> iterator() {
+				return index.keySet().iterator();
+			}
+		};
 	}
 	
 	private TreeMapIndex(TreeMap<K,V> index) {

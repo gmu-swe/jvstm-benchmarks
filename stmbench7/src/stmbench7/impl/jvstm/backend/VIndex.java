@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import jvstm.VBox;
 import jvstm.util.RedBlackTree;
 import stmbench7.backend.Index;
+import stmbench7.backend.Iterable;
 import stmbench7.core.RuntimeError;
 
 public class VIndex<K extends Comparable<K>,V> implements Index<K,V> {
