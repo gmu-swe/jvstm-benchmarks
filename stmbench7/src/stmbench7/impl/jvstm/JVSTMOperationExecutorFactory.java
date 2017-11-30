@@ -1,6 +1,7 @@
 package stmbench7.impl.jvstm;
 
 import jvstm.Transaction;
+import stmbench7.Benchmark;
 import stmbench7.OperationExecutor;
 import stmbench7.OperationExecutorFactory;
 import stmbench7.Setup;
@@ -17,11 +18,19 @@ public class JVSTMOperationExecutorFactory extends OperationExecutorFactory {
 
 	@Override
 	public void checkpoint(Setup setup) {
+		if (!Benchmark.doCheckpointRollback) {
+			return;
+		}
+
 		tx = Transaction.begin();
 	}
 
 	@Override
 	public void rollback(Setup setup) {
+		if (!Benchmark.doCheckpointRollback) {
+			return;
+		}
+
 		tx.abortTx();
 		tx = null;
 	}

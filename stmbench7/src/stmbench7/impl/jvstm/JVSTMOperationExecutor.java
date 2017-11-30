@@ -1,6 +1,7 @@
 package stmbench7.impl.jvstm;
 
 import jvstm.Atomic;
+import stmbench7.Benchmark;
 import stmbench7.OperationExecutor;
 import stmbench7.core.Operation;
 import stmbench7.core.OperationFailedException;
@@ -52,12 +53,13 @@ public class JVSTMOperationExecutor implements OperationExecutor {
 				throw new RuntimeError("Unexpected operation type");
 		}
 
-		this.idNull = true;
 	}
 
 	public int execute() throws OperationFailedException {
-		if(idNull == true) return op.performOperation();
-		else return txExecute();
+		if(idNull == true || Benchmark.doCheckpointRollback)
+			return op.performOperation();
+		else
+			return txExecute();
 	}
 
 	private int txExecute() throws OperationFailedException {
