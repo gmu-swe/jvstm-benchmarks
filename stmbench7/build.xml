@@ -66,7 +66,7 @@
 		<available file="${lib.dir}/jvstm.jar" property="jvstm.present"/>
 	</target>
 
-	<target name="jar" depends="compile" description="Java-archive STMbench7">
+	<target name="jar" depends="compile,compile-jvstm" description="Java-archive STMbench7">
 		<jar basedir="${build.dir}" destfile="${dist.dir}/${benchname}.jar">
 			<manifest>
 				<attribute name="Main-Class" value="stmbench7.Benchmark" />
