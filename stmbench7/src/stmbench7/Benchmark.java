@@ -30,12 +30,11 @@ import stmbench7.impl.jvstm.JVSTMStats;
 @NonAtomic
 public class Benchmark {
 	public static final boolean doCheckpointRollback;
+	public static final boolean useTransactions;
 
 	static {
-		if (System.getProperty("noCheckpoint") != null)
-			doCheckpointRollback = false;
-		else
-			doCheckpointRollback = true;
+		doCheckpointRollback = (System.getProperty("noCheckpoint") == null);
+		useTransactions      = (System.getProperty("noTransactions") == null);
 	}
 
 	public static final String VERSION = "1.0(15.02.2011)";

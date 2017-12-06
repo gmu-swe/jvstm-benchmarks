@@ -15,7 +15,7 @@ public class DeuceSTMOperationExecutor implements OperationExecutor {
 	private final Operation op;
 	private final Context context;
 
-	private Method m;
+	private static Method m;
 
 	public DeuceSTMOperationExecutor(Operation op, Context context) {
 		this.op = op;
@@ -23,12 +23,17 @@ public class DeuceSTMOperationExecutor implements OperationExecutor {
 	}
 
 	public int execute() throws OperationFailedException {
-        if (context == null || !Benchmark.doCheckpointRollback)
+		if (!Benchmark.useTransactions)
+			return op.performOperation();
+        if (context == null || (!Benchmark.doCheckpointRollback && Benchmark.useTransactions))
         	return doExecute();
-        else {
+		else {
         	if (m == null) {
         		try {
-					m = this.getClass().getDeclaredMethod("doExecute", Context.class);
+        			if (!Benchmark.useTransactions)
+        				m = this.getClass().getDeclaredMethod("doExecute");
+        			else
+        				m = this.getClass().getDeclaredMethod("doExecute", Context.class);
 				} catch (NoSuchMethodException | SecurityException e) {
 					throw new Error(e);
 				}
@@ -68,4 +73,5 @@ public class DeuceSTMOperationExecutor implements OperationExecutor {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 }

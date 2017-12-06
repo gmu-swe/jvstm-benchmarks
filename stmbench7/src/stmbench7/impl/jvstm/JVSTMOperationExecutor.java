@@ -56,7 +56,7 @@ public class JVSTMOperationExecutor implements OperationExecutor {
 	}
 
 	public int execute() throws OperationFailedException {
-		if(idNull == true || Benchmark.doCheckpointRollback)
+		if(idNull == true || Benchmark.doCheckpointRollback || !Benchmark.useTransactions)
 			return op.performOperation();
 		else
 			return txExecute();
